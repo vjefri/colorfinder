@@ -10,23 +10,31 @@
         background-color: #1abc9c;
     }
     
-    .top-box-row {
-        padding: 5px;
-        padding-left: 20px;
-        padding-right: 20px;
+    .center {
+        background-color: #ecf0f1;
+        height: 520px;
+        margin-top: 100px;
+        margin-bottom: 100px;
     }
     
-    .bottom-box-row {
-        padding: 5px;
-        padding-left: 20px;
-        padding-right: 20px;
+    .start {
+        font-family: 'Nunito', sans-serif;
+        color: #2980b9;
+        font-size: 40px;
+        margin-top: 200px;
+        border: 10px solid #2980b9;
+        text-align: center;
     }
     
     .timer {
         font-family: 'Nunito', sans-serif;
         color: white;
         font-size: 40px;
-        margin-top: 300px;
+        margin-top: 250px;
+        border: 10px solid #34495e;
+        border-radius: 15px;
+        background-color: #34495e;
+        text-align: center;
     }
     </style>
 </head>
@@ -34,23 +42,21 @@
 <body>
     <div class="container-fluid">
         <div class="row box">
+            <!-- keeping track of time here -->
             <div class="col-md-2 left">
                 <div class="row">
                     <div class="col-md-4"></div>
-                    <div class="col-md-4 timer">60</div>
+                    <div class="col-md-10 col-md-offset-1 timer">60</div>
                     <div class="col-md-4"></div>
                 </div>
             </div>
+            <!-- where the action happens -->
             <div class="col-md-8 center">
-                <div class="row top-box-row">
-                    <div class="col-md-6 squares"></div>
-                    <div class="col-md-6 squares"></div>
-                </div>
-                <div class="row bottom-box-row">
-                    <div class="col-md-6 squares"></div>
-                    <div class="col-md-6 square"></div>
-                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 start">Start</div>
+                <div class="col-md-4"></div>
             </div>
+            <!-- nothing to see here -->
             <div class="col-md-2 right"> </div>
         </div>
     </div>
@@ -62,58 +68,73 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- My Code -->
     <script type="text/javascript">
-    // middle box background css
-    $('.center').css({
-        'background-color': '#ecf0f1',
-        'height': '520px',
-        'margin-top': '100px',
-        'margin-bottom': '100px'
-    });
-    // other squares
-    $('.squares').css({
-        'background-color': '#e74c3c',
-        'height': '250px',
-        'border': '10px solid #ecf0f1',
-        'border-radius': '25px',
-    });
-    // chosen square 
-    $('.square').css({
-        'background-color': '#e75c3c',
-        'height': '250px',
-        'border': '10px solid #ecf0f1',
-        'border-radius': '25px',
-    });
+    // triger when chosen square is clicked, creates more squares and colors
+    var numRows = 2,
+        numColumns = 2,
+        gridNum = 6,
+        heightSquare = 250;
+    $('.start').click(function() {
 
-    // triger when chosen square is clicked, changes colors
-    $(".square").click(function() {
-        console.log("hello");
+        // time function, one minute
+        var sec = $('.timer').text();
+        var timer = setInterval(function() {
+            $('.timer').text(--sec);
+            if (sec < 10) {
+                $('.timer').css('color', "#c0392b");
+            }
+            if (sec === 0) {
+                $('.timer').fadeOut('fast');
+                clearInterval(timer);
+            }
+        }, 1000);
+
+        var ranColor = createRowsandColumns(numRows, numColumns);
+        // lighten random square
+
+        numRows++;
+        numColumns++;
+        gridNum = 12 / 2;
+        heightSquare = 500 / numColumns;
+    });
+    // create rows and columns
+    function createRowsandColumns(numRows, numColumns) {
         var ranColor = randomColor();
-        var ranColorArr = ranColor.split("");
-
-        $(".squares").css('background-color', ranColor);
-        $(".square").css('background-color', ranColor);
-    });
-
-    // returns random color in array
-    function randomColor() {
-        var ranColorArr = ['#FF00FF', '#9b59b6', '#d35400', '#bdc3c7'];
-        var ranNum = Math.floor(Math.random() * 2) + 0;
-        var ranColor = ranColorArr[ranNum];
+        for (var i = 1; i <= numRows; i++) {
+            $(".center").append("<div class=row " + "row" + i);
+            $(".row " + "row" + i).css({
+                'padding': '5px',
+                'padding-left': '20px',
+                'padding-right': '20px',
+            });
+            for (var j = 1; j <= numColumns; j++) {
+                $(".row " + "row" + j).append("<div class=col-md-" + gridNum + " same-color>" + " </div>");
+                $(".col-md-" + gridNum + " same-color").css({
+                    'background-color': ranColor,
+                    'height': heightSquare + 'px',
+                    'border': '10px solid #ecf0f1',
+                    'border-radius': '25px',
+                });
+            }
+        }
+        $(".center").append("</div>");
         return ranColor;
     }
 
-    // time function, one minute
-    var sec = $('.timer').text();
-    var timer = setInterval(function() {
-        $('.timer').text(--sec);
-        if (sec < 10) {
-        	$('.timer').css('color', "#c0392b");
-        }
-        if (sec === 0) {
-            $('.timer').fadeOut('fast');
-            clearInterval(timer);
-        }
-    }, 1000);
+    // returns random color in array
+    function randomColor() {
+        return '#' + Math.random().toString(16).substring(4);
+    }
+
+    // lighten color
+    var lightenColor = function(color, percent) {
+        var num = parseInt(color, 16),
+            amt = Math.round(2.55 * percent),
+            R = (num >> 16) + amt,
+            B = (num >> 8 & 0x00FF) + amt,
+            G = (num & 0x0000FF) + amt;
+
+        return (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+    };
     </script>
 </body>
 
