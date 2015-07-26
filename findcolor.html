@@ -69,13 +69,17 @@
     <!-- My Code -->
     <script type="text/javascript">
     // triger when chosen square is clicked, creates more squares and colors
-    var numRows = 2,
-        numColumns = 2,
-        gridNum = 6,
-        heightSquare = 250;
-    $('.start').click(function() {
+    $('.start').on('click', createLevel);
 
-        // time function, one minute
+    function createLevel() {
+        startTimer();
+        $('.start').fadeOut('slow');
+        // clear previous level
+        var ranColor = createRowsandColumns(numRows, numColumns, gridNum, heightSquare);
+    }
+
+    // start timer
+    function startTimer() {
         var sec = $('.timer').text();
         var timer = setInterval(function() {
             $('.timer').text(--sec);
@@ -87,17 +91,14 @@
                 clearInterval(timer);
             }
         }, 1000);
-
-        var ranColor = createRowsandColumns(numRows, numColumns);
-        // lighten random square
-
-        numRows++;
-        numColumns++;
-        gridNum = 12 / 2;
-        heightSquare = 500 / numColumns;
-    });
+    }
     // create rows and columns
-    function createRowsandColumns(numRows, numColumns) {
+    var numRows = 2,
+        numColumns = 2,
+        gridNum = 6,
+        heightSquare = 250;
+
+    function createRowsandColumns(numRows, numColumns, gridNum, heightSquare) {
         var ranColor = randomColor();
         for (var i = 1; i <= numRows; i++) {
             $(".center").append("<div class=row " + "row" + i);
@@ -117,24 +118,28 @@
             }
         }
         $(".center").append("</div>");
+        numRows++;
+        numColumns++;
+        gridNum = 12 / 2;
+        heightSquare = 500 / numColumns;
         return ranColor;
     }
 
-    // returns random color in array
+    // returns random color
     function randomColor() {
         return '#' + Math.random().toString(16).substring(4);
     }
 
-    // lighten color
-    var lightenColor = function(color, percent) {
-        var num = parseInt(color, 16),
-            amt = Math.round(2.55 * percent),
-            R = (num >> 16) + amt,
-            B = (num >> 8 & 0x00FF) + amt,
-            G = (num & 0x0000FF) + amt;
+    // // lighten color
+    // function lightenColor(color, percent) {
+    //     var num = parseInt(color, 16),
+    //         amt = Math.round(2.55 * percent),
+    //         R = (num >> 16) + amt,
+    //         B = (num >> 8 & 0x00FF) + amt,
+    //         G = (num & 0x0000FF) + amt;
 
-        return (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
-    };
+    //     return (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+    // }
     </script>
 </body>
 
