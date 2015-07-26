@@ -40,14 +40,17 @@
             <div class="col-md-2 right"> </div>
         </div>
     </div>
-
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- My Code -->
     <script type="text/javascript">
+
+
+
     $('.center').css({
         'background-color': '#ecf0f1',
         'height': '520px',
@@ -69,17 +72,18 @@
         'border-radius': '25px',
     });
 
-    $(".squares").click(function() {
-    	console.log("hello");
-        $(".squares").css('background-color', randomColor());
-    });
-
     $(".square").click(function() {
-        $(".square").css('background-color', randomColor());
+        console.log("hello");
+        var ranColor = randomColor();
+        var ranColorArr = ranColor.split("");
+
+        $(".squares").css('background-color', ranColor);
+        $(".square").css('background-color', ranColor);
     });
 
+    // returns random color in array
     function randomColor() {
-        var ranColorArr = ['#f1c40f', '#9b59b6', '#d35400'];
+        var ranColorArr = ['#FF00FF', '#9b59b6', '#d35400', '#bdc3c7'];
         var ranNum = Math.floor(Math.random() * 2) + 0;
         var ranColor = ranColorArr[ranNum];
         return ranColor;
