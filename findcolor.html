@@ -58,7 +58,7 @@
             <div class="col-md-2 left">
                 <div class="row">
                     <div class="col-md-4"></div>
-                    <div class="col-md-10 col-md-offset-1 timer">60</div>
+                    <div class="col-md-10 col-md-offset-1 timer">30</div>
                     <div class="col-md-4"></div>
                 </div>
             </div>
@@ -88,7 +88,6 @@
     <script type="text/javascript">
     // triger when chosen square is clicked, creates more squares and colors
     $('.start').on('click', createLevel);
-
 
     // initialize starting values
     var numRows = 2,
@@ -132,8 +131,15 @@
                 $('.timer').css('color', "#e74c3c");
             }
             if (sec === 0) {
-                $('.timer').fadeOut('fast');
+                $('.center .row').remove();
+                $('.timer').fadeOut('slow');
+                $('.timer').text('Play again in 5 sec');
+                $('.timer').fadeIn('slow');
                 clearInterval(timer);
+                setTimeout(
+                    function() {
+                        location.reload();
+                    }, 5000);
             }
         }, 1000);
     }
@@ -145,6 +151,18 @@
         gameScore++;
         $('.score').text(gameScore);
     }
+
+    // // clear and play new game. to be continue
+    // function clearGame() {
+    //     $('.center .row').remove();
+    //     $('.center').append("<div class=col-md-4></div>");
+    //     $('.center').append('<div class="col-md-4 start">Play Again</div>');
+    //     $('.center').append("<div class=col-md-4></div>");
+    //     numRows = 2;
+    //     numColumns = 2;
+    //     gridNum = 6;
+    //     heightSquare = 250;
+    // }
 
     // create rows and columns
     function createRowsandColumns(numRows, numColumns, gridNum, heightSquare) {
@@ -179,7 +197,6 @@
     }
     // create random lighter color
     function randomLighterColor(lighterColor) {
-        console.log(lighterColor);
         var paras = $('.same-color');
         var rand = Math.floor(Math.random() * paras.length);
         paras.eq(rand).addClass('diff');
