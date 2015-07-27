@@ -74,7 +74,7 @@
     function createLevel() {
         startTimer();
         $('.start').fadeOut('slow');
-        // clear previous level
+        $('.center').html("");
         var ranColor = createRowsandColumns(numRows, numColumns, gridNum, heightSquare);
     }
 
@@ -84,7 +84,7 @@
         var timer = setInterval(function() {
             $('.timer').text(--sec);
             if (sec < 10) {
-                $('.timer').css('color', "#c0392b");
+                $('.timer').css('color', "#e74c3c");
             }
             if (sec === 0) {
                 $('.timer').fadeOut('fast');
@@ -101,15 +101,22 @@
     function createRowsandColumns(numRows, numColumns, gridNum, heightSquare) {
         var ranColor = randomColor();
         for (var i = 1; i <= numRows; i++) {
-            $(".center").append("<div class=row " + "row" + i);
-            $(".row " + "row" + i).css({
+            $(".center").append('<div class="row row' + i + '">');
+            // style the rows
+            $('.row row' + i).css({
                 'padding': '5px',
                 'padding-left': '20px',
                 'padding-right': '20px',
             });
+
             for (var j = 1; j <= numColumns; j++) {
-                $(".row " + "row" + j).append("<div class=col-md-" + gridNum + " same-color>" + " </div>");
-                $(".col-md-" + gridNum + " same-color").css({
+                var selectCell = ".same-color";
+                var selectRow = ".row" + i;
+                // add cells to rows
+                $(selectRow).append('<div class="col-md-' + gridNum + ' same-color"> </div>');
+
+                // style cells
+                $(selectCell).css({
                     'background-color': ranColor,
                     'height': heightSquare + 'px',
                     'border': '10px solid #ecf0f1',
@@ -117,6 +124,7 @@
                 });
             }
         }
+
         $(".center").append("</div>");
         numRows++;
         numColumns++;
