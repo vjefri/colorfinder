@@ -73,13 +73,33 @@
     $('.start').on('click', createLevel);
 
 
+    // initialize starting values
+    var numRows = 2,
+        numColumns = 2,
+        gridNum = 6,
+        heightSquare = 250;
+
     function createLevel() {
         startTimer();
         $('.start').fadeOut('slow');
         $('.center').html("");
+
         var ranColor = createRowsandColumns(numRows, numColumns, gridNum, heightSquare);
         var lighterColor = lightenColor(ranColor, 0.3);
         randomLighterColor(lighterColor);
+
+        if (numRows > 4) {
+            numRows = 6;
+            numColumns = 6;
+            gridNum = 2;
+            heightSquare = 500 / numColumns;
+        } else {
+            // increment values
+            numRows++;
+            numColumns++;
+            gridNum = 12 / numColumns;
+            heightSquare = 500 / numColumns;
+        }
         $('.diff').on('click', createLevel);
     }
 
@@ -97,12 +117,8 @@
             }
         }, 1000);
     }
-    // create rows and columns
-    var numRows = 2,
-        numColumns = 2,
-        gridNum = 6,
-        heightSquare = 250;
 
+    // create rows and columns
     function createRowsandColumns(numRows, numColumns, gridNum, heightSquare) {
         var ranColor = randomColor();
         for (var i = 1; i <= numRows; i++) {
@@ -131,10 +147,6 @@
         }
 
         $(".center").append("</div>");
-        numRows++;
-        numColumns++;
-        gridNum = 12 / 2;
-        heightSquare = 500 / numColumns;
         return ranColor;
     }
     // create random lighter color
@@ -148,7 +160,7 @@
 
     // returns random color
     function randomColor() {
-        return '#' + Math.random().toString(16).substring(4);
+        return '#' + Math.random().toString(16).slice(2, 8);
     }
 
     // lighten color
