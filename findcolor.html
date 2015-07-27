@@ -37,6 +37,17 @@
         background-color: #34495e;
         text-align: center;
     }
+    
+    .score {
+        font-family: 'Nunito', sans-serif;
+        color: white;
+        font-size: 40px;
+        margin-top: 250px;
+        border: 10px solid #9b59b6;
+        border-radius: 15px;
+        background-color: #9b59b6;
+        text-align: center;
+    }
     </style>
 </head>
 
@@ -58,7 +69,13 @@
                 <div class="col-md-4"></div>
             </div>
             <!-- nothing to see here -->
-            <div class="col-md-2 right"> </div>
+            <div class="col-md-2 right">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-10 col-md-offset-1 score">0</div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Jquery -->
@@ -88,17 +105,20 @@
         var lighterColor = lightenColor(ranColor, 0.3);
         randomLighterColor(lighterColor);
 
-        if (numRows > 4) {
+        if (numRows >= 4) {
             numRows = 6;
             numColumns = 6;
             gridNum = 2;
-            heightSquare = 500 / numColumns;
+            heightSquare = 500 / 6;
         } else {
             // increment values
             numRows++;
             numColumns++;
             gridNum = 12 / numColumns;
             heightSquare = 500 / numColumns;
+        }
+        if (numRows > 3) {
+            increaseScore();
         }
         $('.diff').on('click', createLevel);
     }
@@ -116,6 +136,14 @@
                 clearInterval(timer);
             }
         }, 1000);
+    }
+
+    // increment score
+    function increaseScore() {
+        var gameScore = $('.score').text();
+        gameScore = parseInt(gameScore);
+        gameScore++;
+        $('.score').text(gameScore);
     }
 
     // create rows and columns
