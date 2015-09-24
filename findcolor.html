@@ -9,7 +9,7 @@
     .box {
         background-color: #1abc9c;
     }
-    
+
     .center {
         background-color: #ecf0f1;
         height: 520px;
@@ -17,7 +17,7 @@
         margin-top: 100px;
         margin-bottom: 100px;
     }
-    
+
     .start {
         font-family: 'Nunito', sans-serif;
         color: #2980b9;
@@ -26,7 +26,7 @@
         border: 10px solid #2980b9;
         text-align: center;
     }
-    
+
     .timer {
         font-family: 'Nunito', sans-serif;
         color: white;
@@ -37,7 +37,7 @@
         background-color: #34495e;
         text-align: center;
     }
-    
+
     .score {
         font-family: 'Nunito', sans-serif;
         color: white;
@@ -86,148 +86,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- My Code -->
     <script type="text/javascript">
-    // triger when chosen square is clicked, creates more squares and colors
-    $('.start').on('click', createLevel);
 
-    // initialize starting values
-    var numRows = 2,
-        numColumns = 2,
-        gridNum = 6,
-        heightSquare = 250;
-
-    function createLevel() {
-        startTimer();
-        $('.start').fadeOut('slow');
-        $('.center').html("");
-
-        var ranColor = createRowsandColumns(numRows, numColumns, gridNum, heightSquare);
-        var lighterColor = lightenColor(ranColor, 0.3);
-        randomLighterColor(lighterColor);
-
-        if (numRows >= 4) {
-            numRows = 6;
-            numColumns = 6;
-            gridNum = 2;
-            heightSquare = 500 / 6;
-        } else {
-            // increment values
-            numRows++;
-            numColumns++;
-            gridNum = 12 / numColumns;
-            heightSquare = 500 / numColumns;
-        }
-        if (numRows > 3) {
-            increaseScore();
-        }
-        $('.diff').on('click', createLevel);
-    }
-
-    // start timer
-    function startTimer() {
-        var sec = $('.timer').text();
-        var timer = setInterval(function() {
-            $('.timer').text(--sec);
-            if (sec < 10) {
-                $('.timer').css('color', "#e74c3c");
-            }
-            if (sec === 0) {
-                $('.center .row').remove();
-                $('.timer').fadeOut('slow');
-                $('.timer').text('Play again in 5 sec');
-                $('.timer').fadeIn('slow');
-                clearInterval(timer);
-                setTimeout(
-                    function() {
-                        location.reload();
-                    }, 5000);
-            }
-        }, 1000);
-    }
-
-    // increment score
-    function increaseScore() {
-        var gameScore = $('.score').text();
-        gameScore = parseInt(gameScore);
-        gameScore++;
-        $('.score').text(gameScore);
-    }
-
-    // // clear and play new game. to be continue
-    // function clearGame() {
-    //     $('.center .row').remove();
-    //     $('.center').append("<div class=col-md-4></div>");
-    //     $('.center').append('<div class="col-md-4 start">Play Again</div>');
-    //     $('.center').append("<div class=col-md-4></div>");
-    //     numRows = 2;
-    //     numColumns = 2;
-    //     gridNum = 6;
-    //     heightSquare = 250;
-    // }
-
-    // create rows and columns
-    function createRowsandColumns(numRows, numColumns, gridNum, heightSquare) {
-        var ranColor = randomColor();
-        for (var i = 1; i <= numRows; i++) {
-            $(".center").append('<div class="row row' + i + '">');
-            // style the rows
-            $('.row row' + i).css({
-                'padding': '5px',
-                'padding-left': '20px',
-                'padding-right': '20px',
-            });
-
-            for (var j = 1; j <= numColumns; j++) {
-                var selectCell = ".same-color";
-                var selectRow = ".row" + i;
-                // add cells to rows
-                $(selectRow).append('<div class="col-md-' + gridNum + ' same-color"> </div>');
-
-                // style cells
-                $(selectCell).css({
-                    'background-color': ranColor,
-                    'height': heightSquare + 'px',
-                    'border': '10px solid #ecf0f1',
-                    'border-radius': '25px',
-                });
-            }
-        }
-
-        $(".center").append("</div>");
-        return ranColor;
-    }
-    // create random lighter color
-    function randomLighterColor(lighterColor) {
-        var paras = $('.same-color');
-        var rand = Math.floor(Math.random() * paras.length);
-        paras.eq(rand).addClass('diff');
-        $('.diff').css('background-color', lighterColor);
-    }
-
-    // returns random color
-    function randomColor() {
-        return '#' + Math.random().toString(16).slice(2, 8);
-    }
-
-    // lighten color
-    function lightenColor(hex, lum) {
-        // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        }
-        lum = lum || 0;
-
-        // convert to decimal and change luminosity
-        var rgb = "#",
-            c, i;
-        for (i = 0; i < 3; i++) {
-            c = parseInt(hex.substr(i * 2, 2), 16);
-            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-            rgb += ("00" + c).substr(c.length);
-        }
-
-        return rgb;
-    }
     </script>
 </body>
 

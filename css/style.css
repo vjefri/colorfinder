@@ -1,0 +1,42 @@
+.box {
+    background-color: #1abc9c;
+}
+
+.center {
+    background-color: #ecf0f1;
+    height: 520px;
+    padding-top: 10px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.start {
+    font-family: 'Nunito', sans-serif;
+    color: #2980b9;
+    font-size: 40px;
+    margin-top: 200px;
+    border: 10px solid #2980b9;
+    text-align: center;
+}
+
+.timer {
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    font-size: 40px;
+    margin-top: 250px;
+    border: 10px solid #34495e;
+    border-radius: 15px;
+    background-color: #34495e;
+    text-align: center;
+}
+
+.score {
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    font-size: 40px;
+    margin-top: 250px;
+    border: 10px solid #9b59b6;
+    border-radius: 15px;
+    background-color: #9b59b6;
+    text-align: center;
+}
