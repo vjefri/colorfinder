@@ -9,7 +9,7 @@
     .box {
         background-color: #1abc9c;
     }
-
+    
     .center {
         background-color: #ecf0f1;
         height: 520px;
@@ -17,7 +17,7 @@
         margin-top: 100px;
         margin-bottom: 100px;
     }
-
+    
     .start {
         font-family: 'Nunito', sans-serif;
         color: #2980b9;
@@ -26,7 +26,7 @@
         border: 10px solid #2980b9;
         text-align: center;
     }
-
+    
     .timer {
         font-family: 'Nunito', sans-serif;
         color: white;
@@ -37,7 +37,7 @@
         background-color: #34495e;
         text-align: center;
     }
-
+    
     .score {
         font-family: 'Nunito', sans-serif;
         color: white;
@@ -55,25 +55,25 @@
     <div class="container-fluid">
         <div class="row box">
             <!-- keeping track of time here -->
-            <div class="col-md-2 left">
+            <div class="col-md-2 col-sm-2 left">
                 <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-10 col-md-offset-1 timer">30</div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-10 col-sm-4 col-md-offset-1 col-sm-offset-1 timer">60</div>
+                    <div class="col-md-4 col-sm-4"></div>
                 </div>
             </div>
             <!-- where the action happens -->
-            <div class="col-md-8 center">
+            <div class="col-md-8 col-sm-8 center">
                 <div class="col-md-4"></div>
                 <div class="col-md-4 start">Start</div>
                 <div class="col-md-4"></div>
             </div>
             <!-- nothing to see here -->
-            <div class="col-md-2 right">
+            <div class="col-md-2 col-sm-8 right">
                 <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-10 col-md-offset-1 score">0</div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-10 col-sm-10 col-md-offset-1 score">0</div>
+                    <div class="col-md-4 col-sm-4"></div>
                 </div>
             </div>
         </div>
@@ -85,9 +85,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- My Code -->
-    <script type="text/javascript">
-
-    </script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
